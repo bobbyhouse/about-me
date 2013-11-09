@@ -1,0 +1,40 @@
+{
+  "name": "skeleton",
+  "description": "A simple NodeJS and Backbone application skeleton.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/bobbyhouse/skeleton",
+  "author": {
+    "name": "Bobby House",
+    "email": "bobby.house@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bobbyhouse/skeleton.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bobbyhouse/skeleton/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/bobbyhouse/skeleton/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "app.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "express": "latest",
+    "underscore": "latest"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-handlebars": "~0.5.12",
+    "grunt-contrib-jshint": "~0.7.1",
+    "grunt-contrib-livereload": "~0.1.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-nodemon": "~0.1.1",
+    "grunt-concurrent": "~0.4.1"
+  }
+}
