@@ -1,4 +1,10 @@
-Skeleton
+About-Me
 ========
 
-This is the skeleton of a Backbone + NodeJS application.
+
+### Developing
+
+```
+npm install .
+grunt server
+```
