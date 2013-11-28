@@ -31,6 +31,16 @@ module.exports = function (grunt) {
           }
         }
       },
+      test: {
+        files: {
+          'build/test.js': [
+            'client/test/**/*.js'
+          ]
+        },
+        options: {
+          external: ['jquery', 'underscore', 'backbone']
+        }
+      },
       app: {
         files: {
           'build/app.js': [
@@ -64,6 +74,17 @@ module.exports = function (grunt) {
     // Lint client and server side JS files
     jshint: {
       all: ['*.js', 'lib/**/*.js', 'client/src/**/*.js']
+    },
+
+    karma: {
+      options: {
+        frameworks: ['mocha'],
+        files: ['build/vendor.js', 'build/app.js', 'build/test.js']
+      },
+      dev: {
+        singleRun: true,
+        browsers: ['PhantomJS']
+      }
     },
 
     // Run a development server for the server-side JS
@@ -109,12 +130,15 @@ module.exports = function (grunt) {
   // 3rd Party Plugins
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-simple-mocha');
 
   // Tasks
-  grunt.registerTask('default', ['build']);
-  grunt.registerTask('build',   ['browserify:vendor', 'browserify:app', 'concat']);
-  grunt.registerTask('server',  ['concurrent']);
-  grunt.registerTask('test',    ['simplemocha']);
+  grunt.registerTask('default',     ['build']);
+  grunt.registerTask('build',       ['browserify:vendor', 'browserify:app', 'concat']);
+  grunt.registerTask('server',      ['concurrent']);
+  grunt.registerTask('test',        ['test-client', 'test-server']);
+  grunt.registerTask('test-server', ['simplemocha']);
+  grunt.registerTask('test-client', ['build', 'browserify:test', 'karma:dev']);
 };
