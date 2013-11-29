@@ -3,12 +3,10 @@ var sinon  = require('sinon');
 
 describe('Controllers.Heartbeat', function() {
 
-  var env           = {};
+  var env           = require('../../config.json');
   var services      = require('../../lib/services')(env);
   var models        = require('../../lib/models')(env, services);
   var controllers   = require('../../lib/controllers')(env, models, services);
-
-  console.log(__dirname)
 
 
   it('should handle GETs', function() {

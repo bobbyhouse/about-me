@@ -4,7 +4,7 @@ describe('Routes', function() {
 
   var app = require('express')();
 
-  var env           = {};
+  var env           = require('../config.json');
   var services      = require('../lib/services')(env);
   var models        = require('../lib/models')(env, services);
   var controllers   = require('../lib/controllers')(env, models, services);
