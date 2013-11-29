@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "express": "latest",
+    "request": "latest",
     "underscore": "latest"
   },
   "devDependencies": {
