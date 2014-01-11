@@ -13,7 +13,7 @@ describe('Routes', function() {
   routes(app)
 
   it('adds one GET', function() {
-    app.routes.get.should.have.length(1);
+    app.routes.get.should.have.length(2);
   });
 
   it('adds GET for heartbeat', function() {
@@ -26,6 +26,18 @@ describe('Routes', function() {
       regexp: /^\/api\/heartbeat\/?$/i
     };
     app.routes.get.should.includeEql(heartbeat);
+  });
+
+  it('adds GET for runs', function() {
+
+    var runs = {
+      path: '/api/runs',
+      method: 'get',
+      callbacks: [controllers.runs.get],
+      keys: [],
+      regexp: /^\/api\/runs\/?$/i
+    };
+    app.routes.get.should.includeEql(runs);
   });
 
   it('does not add PATCHs', function() {
