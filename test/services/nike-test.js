@@ -20,22 +20,28 @@ describe('When using the nike service', function() {
 
     beforeEach(function() {
       cb = sinon.spy();
-      services.nike._request.get = sinon.spy();
+      services.nike._request = sinon.spy();
       services.nike.aggregate(cb);
     });
 
     it('should GET the aggregate data', function() {
-      services.nike._request.get.calledOnce.should.be.true;
+      services.nike._request.calledOnce.should.be.true;
     });
 
-    it('should make a request to the nike api', function() {
-      var token = env.services.nike.query.token;
-      var api = 'https://api.nike.com/me/sport?token=' + token;
-      services.nike._request.get.firstCall.args[0].should.equal(api);
+    it('should request json data', function() {
+      services.nike._request.firstCall.args[0].should.have.property('json');
+      services.nike._request.firstCall.args[0].json.should.be.true;
+    });
+
+    it('should set the correct uri path', function() {
+      var token = env.services.nike.query.access_token;
+      var api = 'https://api.nike.com/me/sport?access_token=' + token;
+      services.nike._request.firstCall.args[0].should.have.property('uri');
+      services.nike._request.firstCall.args[0].uri.should.equal(api);
     });
 
     it('should pass callback through to request', function() {
-      services.nike._request.get.firstCall.args[1].should.be.exactly(cb);
+      services.nike._request.firstCall.args[1].should.be.exactly(cb);
     });
   });
 });
