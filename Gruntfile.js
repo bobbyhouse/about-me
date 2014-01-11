@@ -38,26 +38,29 @@ module.exports = function (grunt) {
           ]
         },
         options: {
+          transform: ['hbsfy'],
           external: ['jquery', 'underscore', 'backbone']
         }
       },
       app: {
         files: {
           'build/app.js': [
-            'client/src/main.js'
+            'client/templates/**/*.hbs',
+            'client/src/app.js'
           ]
         },
         options: {
+          transform: ['hbsfy'],
           external: ['jquery', 'underscore', 'backbone']
         }
       }
     },
 
-    clean: ['build', 'public/javascripts/*'],
+    clean: ['build', 'public/javascripts/*', 'public/styles/*'],
 
     concat: {
       dist: {
-        src: ['build/vendor.js', 'build/app.js'],
+        src: ['build/vendor.js', 'build/templates.js', 'build/app.js'],
         dest: 'public/javascripts/<%= pkg.name %>-<%= pkg.version %>.js'
       }
     },
@@ -107,16 +110,22 @@ module.exports = function (grunt) {
         timeout: 3000,
         ignoreLeaks: false,
         ui: 'bdd',
-        reporter: 'tap'
+        reporter: 'dot'
       },
       all: { src: ['test/**/*.js'] }
     },
 
-    // Lint all JS files whenever they change
     watch: {
       scripts: {
-        files: ['*.js', 'lib/**/*.js', 'client/src/**/*.js', 'test/**/*.js'],
-        tasks: ['jshint', 'simplemocha'],
+        files: [
+          '*.js',
+          'lib/**/*.js',
+          'test/**/*.js',
+          'client/src/**/*.js',
+          'client/test/**/*.js',
+          'client/templates/**/*.hbs'
+        ],
+        tasks: ['jshint', 'build', 'test']
       }
     }
   });
@@ -136,9 +145,11 @@ module.exports = function (grunt) {
 
   // Tasks
   grunt.registerTask('default',     ['build']);
-  grunt.registerTask('build',       ['browserify:vendor', 'browserify:app', 'concat']);
+  grunt.registerTask('build',       [ 'browserify:vendor',
+                                      'browserify:app',
+                                      'concat']);
   grunt.registerTask('server',      ['concurrent']);
   grunt.registerTask('test',        ['test-client', 'test-server']);
   grunt.registerTask('test-server', ['simplemocha']);
-  grunt.registerTask('test-client', ['build', 'browserify:test', 'karma:dev']);
+  grunt.registerTask('test-client', ['browserify:test', 'karma:dev']);
 };

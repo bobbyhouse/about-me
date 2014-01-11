@@ -16,6 +16,7 @@ module.exports = (function (port) {
 
     app.use(express.bodyParser());
     app.use(express.methodOverride());
+    app.use('/', express.static(__dirname + '/public'));
     app.use(app.router);
     routes(app);
   });
